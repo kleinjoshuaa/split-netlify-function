@@ -3,6 +3,9 @@ import { getStore } from "@netlify/blobs";
 
 
 export function SplitStorageWrapper(storeId) {
+  console.log('name: "splitio" + "." + storeId', "splitio" + "." + storeId);
+  console.log('process.env.SITE_ID', process.env.SITE_ID);
+  console.log('process.env.TOKEN', process.env.TOKEN);
   if (storeId) {
     const split = getStore({name: "splitio" + "." + storeId,
                             siteId: process.env.SITE_ID,
