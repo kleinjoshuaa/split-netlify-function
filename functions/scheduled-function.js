@@ -3,7 +3,7 @@ import { Synchronizer } from "@splitsoftware/splitio-sync-tools";
 //const {PluggableStorage, ErrorLogger} from "@splitsoftware/splitio-browserjs"
 //const { Wrapper } = require("./SplitWrapper")
 //import Wrapper from "./SplitWrapper"
-import { SplitStorageWrapper } from "../../shared/SplitStorageWrapper"
+import { SplitStorageWrapper } from "../shared/SplitStorageWrapper"
 
 const synchronizer = new Synchronizer({
   core: {

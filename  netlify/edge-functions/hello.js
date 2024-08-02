@@ -4,7 +4,7 @@ import {
     PluggableStorage,
     ErrorLogger
   } from "@splitsoftware/splitio-browserjs";
-import { SplitStorageWrapper } from "../../shared/SplitStorageWrapper"
+import { SplitStorageWrapper } from "../shared/SplitStorageWrapper"
 
 export default async (request) => {
     // Example condition: check a query parameter
