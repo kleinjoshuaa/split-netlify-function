@@ -4,7 +4,7 @@ import { Synchronizer } from "@splitsoftware/splitio-sync-tools";
 //const { Wrapper } = require("./SplitWrapper")
 //import Wrapper from "./SplitWrapper"
 import { SplitStorageWrapper } from "../shared/SplitStorageWrapper.js"
-//import { connectLambda } from "@netlify/blobs";
+import { connectLambda } from "@netlify/blobs";
 
 const synchronizer = new Synchronizer({
   core: {
@@ -18,15 +18,20 @@ const synchronizer = new Synchronizer({
 });
 
 export async function handler(req, context) {
-
+  connectLambda(req)
   try {
     await new Promise((res, rej) => {
       synchronizer.execute((error) => (error ? rej(error) : res()));
     });
-    return new Response("Synchronization finished");
+    return {
+      body: "Synchronization completed successfully",
+      statusCode: 200,
+    };
   } catch (error) {
-    return new Response(`Synchronization failed with error: ${error}`, {
-      status: 500,
-    });
+    return { 
+      body:`Synchronization failed with error: ${error}`,
+      statusCode: 500,
+    }
+    };
   }
-};
+
