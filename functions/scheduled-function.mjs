@@ -15,6 +15,7 @@ const synchronizer = new Synchronizer({
     type: "PLUGGABLE",
     wrapper: SplitStorageWrapper(process.env.SPLIT_API_KEY),
   },
+  debug: true,
 });
 
 export async function handler(req, context) {
