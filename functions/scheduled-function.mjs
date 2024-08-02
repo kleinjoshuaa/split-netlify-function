@@ -3,7 +3,7 @@ import { Synchronizer } from "@splitsoftware/splitio-sync-tools";
 //const {PluggableStorage, ErrorLogger} from "@splitsoftware/splitio-browserjs"
 //const { Wrapper } = require("./SplitWrapper")
 //import Wrapper from "./SplitWrapper"
-import { SplitStorageWrapper } from "../shared/SplitStorageWrapper"
+import { SplitStorageWrapper } from "../shared/SplitStorageWrapper.js"
 
 const synchronizer = new Synchronizer({
   core: {
@@ -16,7 +16,7 @@ const synchronizer = new Synchronizer({
   },
 });
 
-export default async (req) => {
+export async function handler (event, context) {
   try {
     await new Promise((res, rej) => {
       synchronizer.execute((error) => (error ? rej(error) : res()));

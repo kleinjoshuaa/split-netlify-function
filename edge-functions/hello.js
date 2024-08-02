@@ -7,7 +7,6 @@ import {
 import { SplitStorageWrapper } from "../shared/SplitStorageWrapper.js"
 
 export default async (request) => {
-    // Example condition: check a query parameter
     const factory = SplitFactory({
     core: {
       authorizationKey: process.env.SPLIT_API_KEY,
