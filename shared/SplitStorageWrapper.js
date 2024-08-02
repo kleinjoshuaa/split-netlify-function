@@ -1,6 +1,6 @@
 import { getStore } from "@netlify/blobs";
 
-export default function SplitStorageWrapper(storeId) {
+export function SplitStorageWrapper(storeId) {
   if (storeId) {
     const split = getStore("splitio" + "." + storeId);
   } else {
