@@ -5,7 +5,7 @@ import {
     ErrorLogger
   } from "@splitsoftware/splitio-browserjs";
 import { SplitStorageWrapper } from "../shared/SplitStorageWrapper.js"
-
+export const config = {path: "/split"};
 export default async (request) => {
     const factory = SplitFactory({
     core: {
