@@ -3,17 +3,14 @@ import { getStore } from "@netlify/blobs";
 
 
 export function SplitStorageWrapper(storeId) {
+  let storeName = "splitio";
   if (storeId) {
-    const split = getStore({name: "splitio" + "." + storeId,
-                            siteID: process.env.SITE_ID,
-                            token: process.env.TOKEN,
-    });
-  } else {
-    const split = getStore({name: "splitio",
-      siteID: process.env.SITE_ID,
-      token: process.env.TOKEN,
+    storeName +=  `.${storeId}`;
+  } 
+  const split = store = getStore({name: storeName,
+    siteID: process.env.SITE_ID,
+    token: process.env.TOKEN,
 });
-  }
   return {
     async get(key) {
       return (await split.get(key, { type: "strong" })).json();
@@ -86,7 +83,7 @@ export function SplitStorageWrapper(storeId) {
     // No-op. No need to connect to blob
     async connect() {
       //  throws if blob isn't there
-      if (!split) throw new Error("Split object not provided");
+      if (typeof split == 'undefined') throw new Error("Split object not provided");
     },
 
     // No-op. No need to disconnect from DurableObject stub
