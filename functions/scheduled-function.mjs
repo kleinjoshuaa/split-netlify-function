@@ -17,7 +17,7 @@ const synchronizer = new Synchronizer({
   },
 });
 
-export default async (req, context) => {
+export async function handler(req, context) {
 
   try {
     await new Promise((res, rej) => {
