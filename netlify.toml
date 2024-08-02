@@ -1,0 +1,9 @@
+[build]
+  edge_functions = "netlify/edge-functions"
+  functions = "functions"
+  publish = "public"
+
+
+
+[functions."schedule-function"]
+  schedule = "* * * * *" # This can be any cron syntax
