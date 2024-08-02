@@ -65,12 +65,12 @@ export function SplitStorageWrapper(storeId) {
       } else {
         let set = new Set([...val]);
       }
-      await split.set(key, set);
+      return (await split.set(key, set)).ok;
     },
     async removeItems(key, items) {
       let set = await split.get(key, { type: "strong" });
       items.forEach((x) => (set.has(x) ? set.delete(x) : ""));
-      await split.set(key, set);
+      return (await split.set(key, set)).ok;
     },
     async getItems(key) {
       return (await split.get(key, { type: "strong" })).json();
