@@ -68,13 +68,11 @@ export function SplitStorageWrapper(storeId) {
       await split.set(key, set);
     },
     async removeItems(key, items) {
-      //TODO
       let set = await split.get(key, { type: "strong" });
       items.forEach((x) => (set.has(x) ? set.delete(x) : ""));
       await split.set(key, set);
     },
     async getItems(key) {
-      //TODO
       return (await split.get(key, { type: "strong" })).json();
     },
     // No-op. No need to connect to blob
