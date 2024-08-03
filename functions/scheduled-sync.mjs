@@ -1,8 +1,5 @@
-//const { Synchronizer } = require('@splitsoftware/splitio-sync-tools');
 import { Synchronizer } from "@splitsoftware/splitio-sync-tools";
-//const {PluggableStorage, ErrorLogger} from "@splitsoftware/splitio-browserjs"
-//const { Wrapper } = require("./SplitWrapper")
-//import Wrapper from "./SplitWrapper"
+
 import { SplitStorageWrapper } from "../shared/SplitStorageWrapper.js"
 import { connectLambda } from "@netlify/blobs";
 
