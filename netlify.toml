@@ -5,5 +5,5 @@
 
 
 
-[functions."schedule-function"]
+[functions."scheduled-sync"]
   schedule = "* * * * *" # This can be any cron syntax
