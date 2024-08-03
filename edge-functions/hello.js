@@ -7,10 +7,13 @@ import {
 import { SplitStorageWrapper } from "../shared/SplitStorageWrapper.js"
 export const config = {path: "/split"};
 export default async (request) => {
+  const url = new URL(request.url);
+  const key = url.searchParams.get("user") ?? 'default';
+
     const factory = SplitFactory({
     core: {
       authorizationKey: process.env.SPLIT_API_KEY,
-      key
+      key: key
     },
     mode: "consumer_partial",
     storage: PluggableStorage({

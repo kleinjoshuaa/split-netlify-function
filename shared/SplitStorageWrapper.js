@@ -2,83 +2,99 @@ import { getStore } from "@netlify/blobs";
 
 
 
-export function SplitStorageWrapper(storeId) {
+export function SplitStorageWrapper(storeId, debug=false) {
   let storeName = "splitio";
   if (storeId) {
     storeName +=  `.${storeId}`;
   } 
-  const split = store = getStore({name: storeName,
+  const split = getStore({name: storeName,
     siteID: process.env.SITE_ID,
     token: process.env.TOKEN,
 });
   return {
     async get(key) {
-      return (await split.get(key, { type: "strong" })).json();
+      if(debug) console.log('getting key', key);
+      let ret = (await split.get(key))
+      if(debug) console.log('value: '+ret)
+      return ret ? ret : null; 
     },
     async set(key, value) {
-      return (await split.set(key, value)).ok;
+      if(debug) console.log('setting key', key, 'value', value);
+      return (await split.set(key, value));
     },
     async getAndSet(key, value) {
+      if(debug) console.log('getting and setting key', key, 'value', value);
       return split
-        .get(key, { type: "strong" })
-        .then((val) => split.set(key, value).then(() => val))
-        .json();
+        .get(key)
+        ?.then((val) => split.set(key, value).then(() => val)) ?? null;
     },
     async del(key) {
-      return (await split.delete(key)).ok;
+      if(debug) console.log
+      return (await split.delete(key));
     },
     async getKeysByPrefix(prefix) {
-      return (
-        await split
-          .list()
-          .filter((x) => x.key.startsWith(prefix))
-          .map((x) => x.key)
-      ).json();
+      if(debug) console.log('getting keys by prefix', prefix);
+      const blobs = (await split.list())?.blobs ?? [];
+
+      if (blobs.length === 0) {
+        return blobs;
+      }
+    
+      return blobs
+        .filter(blob => blob.key.startsWith(prefix))
+        .map(blob => blob.key);
     },
     async getMany(keys) {
+      if(debug) console.log('getting many keys', keys);
       return (
-        await keys.map(async (key) => await split.get(key, { type: "strong" }))
-      ).json();
+        await keys.map(async (key) => await split.get(key))
+      );
     },
     async incr(key, increment = 1) {
-      let val = split.get(key, { type: "strong" });
+      if(debug) console.log("incrementing key", key, "by", increment);
+      let val = split.get(key);
       if (!isNaN(parseInt(val, 10))) {
         val += increment;
       } else {
         val = increment;
       }
-      return (await split.set(key, val)).json();
+      return (await split.set(key, val));
     },
     async decr(key, decrement = 1) {
+      if(debug) console.log('decrementing key', key, 'by', decrement);
       let val = split.get(key, { type: "strong" });
       if (!isNaN(parseInt(val, 10))) {
         val -= decrement;
       } else {
         val = decrement;
       }
-      return (await split.set(key, val)).json();
+      return (await split.set(key, val));
     },
     async itemContains(key, item) {
+      if(debug) console.log('item contains key', key, 'item', item);
       return (
-        await split.get(key, { type: "strong" }).then((x) => x.has(item))
-      ).json();
+        await split.get(key)?.then((x) => x.has(item)) ?? false
+      );
     },
     async addItems(key, items) {
-      let val = await split.get(key, { type: "strong" });
+      if(debug) console.log('adding items to key', key, 'items', items);
+      let val = await split.get(key);
       if (val instanceof Set) {
         let set = val.union(items);
       } else {
         let set = new Set([...val]);
       }
-      return (await split.set(key, set)).ok;
+      return (await split.set(key, set));
     },
     async removeItems(key, items) {
-      let set = await split.get(key, { type: "strong" });
+      if(debug) console.log('removing items from key', key, 'items', items);
+      let set = await split.get(key);
       items.forEach((x) => (set.has(x) ? set.delete(x) : ""));
-      return (await split.set(key, set)).ok;
+      return (await split.set(key, set));
     },
     async getItems(key) {
-      return (await split.get(key, { type: "strong" })).json();
+      if(debug) console.log('getting items from key', key);
+      return (await split.get(key)) ?? [];
     },
     // No-op. No need to connect to blob
     async connect() {
