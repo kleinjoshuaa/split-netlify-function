@@ -2,9 +2,6 @@
 
 This project demonstrates how to use Netlify Edge Functions and blob storage with Split.io for feature flagging and A/B testing. The project includes a sample edge function that serves different HTML pages based on the feature flag evaluation.
 
-## Project Structure
-netlify/ ├── .gitignore ├── .netlify/ │ ├── blobs-serve/ │ ├── edge-functions-dist/ │ │ ├── 779f8481dc4fd28f58b4671e2837779d8a73237a541761ec52bbc8891ce60d41.eszip │ │ ├── manifest.json │ ├── edge-functions-import-map.json │ ├── edge-functions-serve/ │ ├── functions/ │ ├── functions-internal/ │ ├── netlify.toml │ ├── state.json │ ├── v1/ ├── .vscode/ │ ├── launch.json ├── edge-functions/ │ ├── hello.js ├── functions/ │ ├── .netlify/ │ ├── scheduled-sync.mjs ├── netlify.toml ├── package.json ├── public/ │ ├── alternative.html │ ├── error.html │ ├── index.html ├── README.md ├── shared/ │ ├── SplitStorageWrapper.js
-
 
 ## Prerequisites
 
@@ -18,8 +15,8 @@ netlify/ ├── .gitignore ├── .netlify/ │ ├── blobs-serve/ │
 1. Clone the repository:
 
     ```sh
-    git clone <repository-url>
-    cd <repository-directory>
+    git clone https://github.com/kleinjoshuaa/split-netlify-function
+    cd split-netlify-function
     ```
 
 2. Install dependencies:
@@ -28,10 +25,11 @@ netlify/ ├── .gitignore ├── .netlify/ │ ├── blobs-serve/ │
     npm install
     ```
 
-3. Create a `.env` file in the root directory and add your Split.io API key:
+3. Create  environment variables in netlify add your Split.io API key and netlify personal access token:
 
     ```env
     SPLIT_API_KEY=your_split_api_key
+    TOKEN=your_netlify_personal_access_token
     ```
 
 ## Running Locally
