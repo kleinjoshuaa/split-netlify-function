@@ -62,7 +62,7 @@ export function SplitStorageWrapper(storeId, debug=false) {
     },
     async decr(key, decrement = 1) {
       if(debug) console.log('decrementing key', key, 'by', decrement);
-      let val = split.get(key, { type: "strong" });
+      let val = split.get(key);
       if (!isNaN(parseInt(val, 10))) {
         val -= decrement;
       } else {
