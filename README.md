@@ -48,7 +48,7 @@ netlify deploy
 ```
 
 ## Edge Function
-The main edge function is located in `edge-functions/hello.js`. It uses Split.io to evaluate feature flags and serves different HTML pages based on the evaluation result.
+The main edge function is located in [`edge-functions/hello.js`](edge-functions/hello.js). It uses Split.io to evaluate feature flags and serves different HTML pages based on the evaluation result.
 
 ## Example Code
 ```js
@@ -103,6 +103,6 @@ export default async (request) => {
 
 ## Split Wrapper Implementation
 
-The project includes a shared utility for Split.io storage wrapper located in `shared/SplitStorageWrapper.js`.
+The project includes a shared utility for Split.io storage wrapper located in [`shared/SplitStorageWrapper.js`](shared/SplitStorageWrapper.js).
 
 This is based upon the wrapper that was implemented for [cloudflare workers](https://github.com/splitio/cloudflare-workers-template/blob/main/src/SplitStorageWrapper.ts), but is instead implemented for netlify blobs. 
