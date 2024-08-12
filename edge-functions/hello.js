@@ -7,6 +7,7 @@ import {
 import { SplitStorageWrapper } from "../shared/SplitStorageWrapper.js"
 export const config = {path: "/split"};
 export default async (request) => {
+  const startTime = performance.now(); // Start timing
   const url = new URL(request.url);
   const key = url.searchParams.get("user") ?? 'default';
 
@@ -43,7 +44,9 @@ export default async (request) => {
     // Fetch the selected HTML page
     const response = await fetch(new URL(`/${page}`, url.origin));
     const htmlContent = await response.text();
-  
+    const endTime = performance.now(); // End timing
+  const duration = endTime - startTime; // Calculate duration
+  console.log(`Function execution time: ${duration} milliseconds`);
     return new Response(htmlContent, {
       headers: { 'Content-Type': 'text/html' },
     });

@@ -84,7 +84,7 @@ export function SplitStorageWrapper(storeId, debug=false) {
       if (val instanceof Set) {
         set = val.union(items);
       } else {
-        set = new Set([...items]);
+        set = new Set(items);
       }
       return (await split.set(key, set));
     },
