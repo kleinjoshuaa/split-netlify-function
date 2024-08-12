@@ -41,7 +41,7 @@ export default async (request) => {
       page = 'index.html';
     }
     const manager = await factory.manager();
-    console.log(await client.getTreatments(manager.names()));
+    console.log(await client.getTreatments(await manager.names()));
     // Fetch the selected HTML page
     const response = await fetch(new URL(`/${page}`, url.origin));
     const htmlContent = await response.text();
