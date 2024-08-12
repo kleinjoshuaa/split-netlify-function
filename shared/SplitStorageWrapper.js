@@ -38,9 +38,9 @@ export function SplitStorageWrapper(storeId, debug=false) {
       const blobs = (await split.list())?.blobs ?? [];
 
       if (blobs.length === 0) {
+        if(debug) console.log('no blobs found');
         return blobs;
       }
-    
       return blobs
         .filter(blob => blob.key.startsWith(prefix))
         .map(blob => blob.key);
@@ -48,7 +48,7 @@ export function SplitStorageWrapper(storeId, debug=false) {
     async getMany(keys) {
       if(debug) console.log('getting many keys', keys);
       return (
-        await keys.map(async (key) => await split.get(key))
+        await Promise.all(keys.map(async (key) => await split.get(key)))
       );
     },
     async incr(key, increment = 1) {
@@ -73,8 +73,11 @@ export function SplitStorageWrapper(storeId, debug=false) {
     },
     async itemContains(key, item) {
       if(debug) console.log('item contains key', key, 'item', item);
+
+      const result = await split.get(key);
+
       return (
-        await split.get(key)?.then((x) => x.has(item)) ?? false
+       await result?.has(item) ?? false
       );
     },
     async addItems(key, items) {

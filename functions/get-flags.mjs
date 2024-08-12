@@ -5,7 +5,6 @@ import {
     ErrorLogger
   } from "@splitsoftware/splitio-browserjs";
 import { SplitStorageWrapper } from "../shared/SplitStorageWrapper.js"
-export const config = {path: "/split"};
 export default async (request) => {
   const startTime = performance.now(); // Start timing
   const url = new URL(request.url);
@@ -18,10 +17,10 @@ export default async (request) => {
     },
     mode: "consumer_partial",
     storage: PluggableStorage({
-      wrapper: SplitStorageWrapper(process.env.SPLIT_API_KEY)
+      wrapper: SplitStorageWrapper(process.env.SPLIT_API_KEY, true)
     }),
     // Disable or keep only ERROR log level in production, to minimize performance impact
-    debug: ErrorLogger()
+    debug: "INFO"
   });
   const client = factory.client();
 
@@ -33,21 +32,12 @@ export default async (request) => {
   });
 
   // Async evaluation, because it access the rollout plan from the Split Storage
-  const treatment = await client.getTreatment('my_flag');
-    let page;
-    if (treatment === 'on') {
-      page = 'alternative.html';
-    } else {
-      page = 'index.html';
-    }
+  const manager = await factory.manager()
+  const names = await manager.names()
+  const treatments = await client.getTreatments(names);
+ 
     // Fetch the selected HTML page
-    const response = await fetch(new URL(`/${page}`, url.origin));
-    const htmlContent = await response.text();
-    const endTime = performance.now(); // End timing
-    const duration = endTime - startTime; // Calculate duration
-    console.log(`Function execution time: ${duration} milliseconds`);
-    return new Response(htmlContent, {
-      headers: { 'Content-Type': 'text/html' },
-    });
+    
+    return new Response(JSON.stringify(treatments, null, 4));
   };
   
