@@ -17,10 +17,10 @@ export default async (request) => {
     },
     mode: "consumer_partial",
     storage: PluggableStorage({
-      wrapper: SplitStorageWrapper(process.env.SPLIT_API_KEY, true)
+      wrapper: SplitStorageWrapper(process.env.SPLIT_API_KEY,)
     }),
     // Disable or keep only ERROR log level in production, to minimize performance impact
-    debug: "INFO"
+    debug: ErrorLogger()
   });
   const client = factory.client();
 
