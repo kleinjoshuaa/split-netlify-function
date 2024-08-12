@@ -11,6 +11,7 @@ export function SplitStorageWrapper(storeId, debug=false) {
     siteID: process.env.SITE_ID,
     token: process.env.TOKEN,
 });
+
   return {
     async get(key) {
       if(debug) console.log('getting key', key);
@@ -78,11 +79,12 @@ export function SplitStorageWrapper(storeId, debug=false) {
     },
     async addItems(key, items) {
       if(debug) console.log('adding items to key', key, 'items', items);
+      let set;
       let val = await split.get(key);
       if (val instanceof Set) {
-        let set = val.union(items);
+        set = val.union(items);
       } else {
-        let set = new Set([...val]);
+        set = new Set([...items]);
       }
       return (await split.set(key, set));
     },
