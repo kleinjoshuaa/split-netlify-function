@@ -7,10 +7,7 @@ export function SplitStorageWrapper(storeId, debug=false) {
   if (storeId) {
     storeName +=  `.${storeId}`;
   } 
-//   const split = getStore({name: storeName,
-//     siteID: process.env.SITE_ID,
-//     token: process.env.TOKEN,
-// });
+
 const split = getStore(storeName);
 
   return {
