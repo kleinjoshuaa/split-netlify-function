@@ -19,6 +19,9 @@ export async function handler(req, context) {
       type: "PLUGGABLE",
       wrapper: SplitStorageWrapper(process.env.SPLIT_API_KEY, true),
     },
+    sync: {
+      splitFilters: [{type: "bySet", values: ["mobile"]}],
+    },
     debug: true,
   });
 
