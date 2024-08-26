@@ -6,4 +6,4 @@
 
 
 [functions."scheduled-sync"]
-  schedule = "* * 1 * *" # This can be any cron syntax
+  schedule = "* * * 1 *" # This can be any cron syntax
