@@ -22,7 +22,7 @@ export async function handler(req, context) {
     sync: {
       splitFilters: [{type: "bySet", values: ["mobile"]}],
     },
-    debug: true,
+    debug: false,
   });
 
   try {
